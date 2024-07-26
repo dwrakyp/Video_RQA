@@ -7,7 +7,7 @@ The scripts for those two applications can be found here.
 **Scripts discreption**
 
 There are two scripts where all the functions are difined one script for RQA in full frames (def_functions_rqafullframes.py)
-and another one for RQA in patches (def_functions_rqaPSNR.py).
-rqafullframes.py           **-->** identify frame change with RP from RQA and store the frames of change in a list
-compare_RQA_with_GT        **-->** compare the results of scene change from RQA with the ground throuth of scene change for the video
-RQApsnr_fnnDopt_patches.py **-->** run RQA for each patch after defining the Dopt with fnn, show the results with plots
+and another one for RQA in patches (def_functions_rqaPSNR.py).\
+rqafullframes.py           **-->** identify frame change with RP from RQA and store the frames of change in a list\
+compare_RQA_with_GT        **-->** compare the results of scene change from RQA with the ground throuth of scene change for the video\
+RQApsnr_fnnDopt_patches.py **-->** run RQA for each patch after defining the Dopt with fnn, show the results with plots\
