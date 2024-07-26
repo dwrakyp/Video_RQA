@@ -1,10 +1,10 @@
-Introduction
+**Introduction**
 
 RQA in video can be used for two different applications. One is RQA in full frames for scene change detection,
 and the other one is RQA for motion detection in each patch of the grid of patches we create for the frames.
 The scripts for those two applications can be found here.
 
-Scripts discreption
+**Scripts discreption**
 
 There are two scripts where all the functions are difined one script for RQA in full frames (def_functions_rqafullframes.py)
 and another one for RQA in patches (def_functions_rqaPSNR.py).
