@@ -15,8 +15,8 @@ import def_functions_rqafullframes
 
 
 # define the path where the videos are stored
-#path="C:\\Users\\asd\Documents\\BrainSIM\\video\\Autoshot\\annotated_videos"
-path="C:\\Users\\asd\Documents\\BrainSIM\\video\\video_rai"
+path="C:\\Users\\asd\Documents\\BrainSIM\\video\\Autoshot\\annotated_videos"
+#path="C:\\Users\\asd\Documents\\BrainSIM\\video\\video_rai"
 #path="C:\\Users\\asd\Documents\\BrainSIM\\video\\BBC"
 
 
@@ -56,16 +56,17 @@ import time
 import def_functions_rqafullframes
 
 file_path = "C:\\Users\\asd\Documents\\BrainSIM\\video\\Autoshot\\annotated_videos\\Dscale_2"
+#file_path = "C:\\Users\\asd\Documents\\BrainSIM\\video\\BBC\\bbc_dscale2"
 os.chdir(file_path)
 
 # # get a list with all the videos in dir to run 
-# l_videos_dscale=[]
-# for i in os.listdir(file_path):
-#     if i[-11:]=="_dscale.mp4":
-#         l_videos_dscale.append(i)
+l_videos_dscale=[]
+for i in os.listdir(file_path):
+    if i[-11:]=="_dscale.mp4":
+        l_videos_dscale.append(i)
 
 #if only one video to run make a list contining only that video
-l_videos_dscale=["18592632588_dscale.mp4"]
+#l_videos_dscale=["18592632588_dscale.mp4"]
 
 #RUN FOR ALL VIDEOS IN DIR AND KEEP DICTIONARIES WITH RESULTS
 d_frame_change={}
@@ -76,7 +77,7 @@ time_took=0
 for i in  l_videos_dscale:
     vid_name=i[:-11]
     print(vid_name)
-    if os.path.exists(file_path+"\\"+vid_name+"_mask3_e15.txt"):
+    if os.path.exists(file_path+"\\"+vid_name+"_mask5_e15.txt"):    # chose the ending of your files depending of the parameters you want
         print("file exists",n)
     else:
         start_time = time.time()
@@ -119,18 +120,18 @@ import json
 import time
 import def_functions_rqafullframes
 #file_path = "C:\\Users\\asd\Documents\\BrainSIM\\video\\video_rai\\rai_dscale4"
-#file_path = "C:\\Users\\asd\Documents\\BrainSIM\\video\\BBC\\bbc_dscale2"
-file_path = "C:\\Users\\asd\Documents\\BrainSIM\\video\\Autoshot\\annotated_videos\\Dscale_2"
+file_path = "C:\\Users\\asd\Documents\\BrainSIM\\video\\BBC\\bbc_dscale2"
+#file_path = "C:\\Users\\asd\Documents\\BrainSIM\\video\\Autoshot\\annotated_videos\\Dscale_2"
 os.chdir(file_path)
 
-# get a list with all the videos in dir to run 
-# l_videos_dscale=[]
-# for i in os.listdir(file_path):
-#     if i[-11:]=="_dscale.mp4":
-#         l_videos_dscale.append(i)
+#get a list with all the videos in dir to run 
+l_videos_dscale=[]
+for i in os.listdir(file_path):
+    if i[-11:]=="_dscale.mp4":
+        l_videos_dscale.append(i)
 
 #if only one video to run make a list contining only that video
-l_videos_dscale=["18592632588_dscale.mp4"]
+#l_videos_dscale=["18592632588_dscale.mp4"]
 
 d_frame_change={}
 d_sec_change={}
@@ -140,21 +141,22 @@ time_took=0
 for i in  l_videos_dscale:
     vid_name=i[:-11]
     print(vid_name)
-    if os.path.exists(file_path+"\\"+vid_name+"_mask3_e15.txt"):
+    if os.path.exists(file_path+"\\"+vid_name+"_mask5_e18.txt"):
         print("file exists",n)
     else:
         start_time = time.time()
 
         frames_flat, fps = def_functions_rqafullframes.load_video_and_flatten(i) #run funtion to get flatten frames and fps
         frames_flat_shape = frames_flat.shape
-        frames_per_group = frames_flat_shape[0] // 10   #SET THE NUMBER HOW MUCH FRAMES IN EACH GROUP ex. THERE ARE 7500 I WANT 1500 FRAMES PER GROUP SO THE NUM WILL BE 50
+        frames_per_group = frames_flat_shape[0] // 50   #SET THE NUMBER HOW MUCH FRAMES IN EACH GROUP ex. THERE ARE 7500 I WANT 1500 FRAMES PER GROUP SO THE NUM WILL BE 50
         frame_groups = [frames_flat[i:i+frames_per_group] for i in range(0, len(frames_flat), frames_per_group)]
 
+        print(frame_groups)
         l_frame_change=[]
         n1=0
         for group in frame_groups:
             print(vid_name, "group ", n1)
-            rp = def_functions_rqafullframes.psnr_rqa_fullFrames(group,1,15)             #run function to get rp, D=1 set the value of e
+            rp = def_functions_rqafullframes.psnr_rqa_fullFrames(group,1,18)             #run function to get rp, D=1 set the value of e
             l_f_change, l_s_change =def_functions_rqafullframes.scan_rp(rp,fps)          #run function to scan rp and get frame change
             l_f_change_realfnumbers=[item + n1*frames_per_group for item in l_f_change]
             #print(l_f_change_realfnumbers)
@@ -164,8 +166,8 @@ for i in  l_videos_dscale:
             #print(l_frame_change)
 
         #save the list l_frame change as txt
-        # with open(vid_name+"_mask_e15.txt", 'w') as f:
-        #     f.write(json.dumps(l_frame_change))
+        with open(vid_name+"_mask5_e18.txt", 'w') as f:
+            f.write(json.dumps(l_frame_change))
 
         end_time = time.time()
         elapsed_time = end_time - start_time
